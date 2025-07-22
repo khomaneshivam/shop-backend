@@ -40,7 +40,7 @@ export const loginController = async (req, res) => {
             return res.status(404).json({ status: false, message: 'Invalid email or password 2' });
         }
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
 
         res.cookie('token', token, {
             maxAge: 1000 * 60 * 60,
