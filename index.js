@@ -9,10 +9,7 @@ import connectDB from './Db/index.js';
 
 const server = express();
 const PORT = process.env.PORT || 8000;
-server.use(cors({
-  origin: "https://shop-frontend-gilt.vercel.app/",
-  credentials: true, //requiured for setting cookie... /** https://www.reddit.com/r/reactjs/comments/vxvdib/cookie_not_being_set_in_react_app_express_backend/?rdt=46764 */
-}));
+server.use(cors());
 
 server.use(cookieParser());
 server.use(express.json({limit: "16kb"}));
