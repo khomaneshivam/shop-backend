@@ -15,7 +15,7 @@ server..use(cors({
   credentials: true
 }));
 server.use(cookieParser());
-server.use(express.json({limit: "16kb"}));
+
 server.use(express.urlencoded({ extended: true }));
 
 
