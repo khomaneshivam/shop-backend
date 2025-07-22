@@ -32,7 +32,7 @@ connectDB()
 })
 
 
-server.use("/", route)
+server.use("/api", route)
 
 server.get("/", (req, res) => {
   res.send("Hello to backend")
