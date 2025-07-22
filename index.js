@@ -11,7 +11,7 @@ const server = express();
 const PORT = process.env.PORT || 8000;
 
 server.use(cors({
-  origin: 'https://shop-frontend-gilt.vercel.app/', // <-- your deployed frontend
+  origin: 'https://shop-frontend-gilt.vercel.app', // <-- your deployed frontend
   credentials: true
 }));
 server.use(cookieParser());
