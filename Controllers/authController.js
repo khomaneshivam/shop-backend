@@ -30,36 +30,31 @@ export const loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Find the user by email
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(404).json({ status:false,message: 'Invalid email or password 1' });
+            return res.status(404).json({ status: false, message: 'Invalid email or password 1' });
         }
 
-        // Compare the passwords
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
-            return res.status(404).json({ status:false,message: 'Invalid email or password 2' });
+            return res.status(404).json({ status: false, message: 'Invalid email or password 2' });
         }
 
-        // Generate a JWT token
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Set the token as a cookie
-        let options = {
-            maxAge: 1000 * 60 * 15, // would expire after 15 minutes
-            httpOnly: false, // The cookie only accessible by the web server
-            signed: false // Indicates if the cookie should be signed
-        }
-        // console.log(token);
-        res.cookie('token', token);
-        res.status(200).json({ status:true,message: 'Login successful' });
+        res.cookie('token', token, {
+            maxAge: 1000 * 60 * 60,
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None'
+        });
+
+        res.status(200).json({ status: true, message: 'Login successful' });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ status:false,message: 'Server error' });
+        res.status(500).json({ status: false, message: 'Server error' });
     }
 };
-
 export const logoutController = (req, res) => {
     res.clearCookie('token');
     res.status(200).json({ status:true,message: 'Logged out successfully' });
