@@ -10,7 +10,7 @@ import connectDB from './Db/index.js';
 const server = express();
 const PORT = process.env.PORT || 8000;
 
-server..use(cors({
+server.use(cors({
   origin: 'https://shop-frontend-gilt.vercel.app/', // <-- your deployed frontend
   credentials: true
 }));
