@@ -9,7 +9,22 @@ import connectDB from './Db/index.js';
 
 const server = express();
 const PORT = process.env.PORT || 8000;
-server.use(cors());
+const allowedOrigins = [
+  "https://shop-frontend-gilt.vercel.app"
+];
+
+server.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
+
 
 server.use(cookieParser());
 server.use(express.json({limit: "16kb"}));
